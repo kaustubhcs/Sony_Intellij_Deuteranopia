@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_15-puzzle" default="compile.module.15-puzzle">
+  <dirname property="module.15-puzzle.basedir" file="${ant.file.module_15-puzzle}"/>
+  
+  <property name="module.jdk.home.15-puzzle" value=""/>
+  <property name="module.jdk.bin.15-puzzle" value=""/>
+  <property name="module.jdk.classpath.15-puzzle" value=""/>
+  
+  <property name="compiler.args.15-puzzle" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="15-puzzle.output.dir" value="${module.15-puzzle.basedir}/../../../out/production/15-puzzle"/>
+  <property name="15-puzzle.testoutput.dir" value="${module.15-puzzle.basedir}/../../../out/test/15-puzzle"/>
+  
+  <path id="15-puzzle.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="15-puzzle.module.production.classpath"/>
+  
+  <path id="15-puzzle.runtime.production.module.classpath">
+    <pathelement location="${15-puzzle.output.dir}"/>
+  </path>
+  
+  <path id="15-puzzle.module.classpath">
+    <pathelement location="${15-puzzle.output.dir}"/>
+  </path>
+  
+  <path id="15-puzzle.runtime.module.classpath">
+    <pathelement location="${15-puzzle.testoutput.dir}"/>
+    <pathelement location="${15-puzzle.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.15-puzzle">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.15-puzzle">
+    <patternset refid="excluded.from.module.15-puzzle"/>
+  </patternset>
+  
+  
+  <target name="compile.module.15-puzzle" depends="compile.module.15-puzzle.production,compile.module.15-puzzle.tests" description="Compile module 15-puzzle"/>
+  
+  <target name="compile.module.15-puzzle.production" depends="register.custom.compilers" description="Compile module 15-puzzle; production classes"/>
+  
+  <target name="compile.module.15-puzzle.tests" depends="register.custom.compilers,compile.module.15-puzzle.production" description="compile module 15-puzzle; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.15-puzzle" description="cleanup module">
+    <delete dir="${15-puzzle.output.dir}"/>
+    <delete dir="${15-puzzle.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_samplesoundeffectsettingextension" default="compile.module.samplesoundeffectsettingextension">
+  <dirname property="module.samplesoundeffectsettingextension.basedir" file="${ant.file.module_samplesoundeffectsettingextension}"/>
+  
+  <property name="module.jdk.home.samplesoundeffectsettingextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.samplesoundeffectsettingextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.samplesoundeffectsettingextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.samplesoundeffectsettingextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="samplesoundeffectsettingextension.output.dir" value="${module.samplesoundeffectsettingextension.basedir}/../../../../out/production/SampleSoundEffectSettingExtension"/>
+  <property name="samplesoundeffectsettingextension.testoutput.dir" value="${module.samplesoundeffectsettingextension.basedir}/../../../../out/test/SampleSoundEffectSettingExtension"/>
+  
+  <path id="samplesoundeffectsettingextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="samplesoundeffectsettingextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.samplesoundeffectsettingextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplesoundeffectsettingextension.runtime.production.module.classpath">
+    <pathelement location="${samplesoundeffectsettingextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="samplesoundeffectsettingextension.module.classpath">
+    <path refid="${module.jdk.classpath.samplesoundeffectsettingextension}"/>
+    <pathelement location="${samplesoundeffectsettingextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplesoundeffectsettingextension.runtime.module.classpath">
+    <pathelement location="${samplesoundeffectsettingextension.testoutput.dir}"/>
+    <pathelement location="${samplesoundeffectsettingextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.samplesoundeffectsettingextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.samplesoundeffectsettingextension">
+    <patternset refid="excluded.from.module.samplesoundeffectsettingextension"/>
+  </patternset>
+  
+  <path id="samplesoundeffectsettingextension.module.sourcepath">
+    <dirset dir="${module.samplesoundeffectsettingextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.samplesoundeffectsettingextension" depends="compile.module.samplesoundeffectsettingextension.production,compile.module.samplesoundeffectsettingextension.tests" description="Compile module SampleSoundEffectSettingExtension"/>
+  
+  <target name="compile.module.samplesoundeffectsettingextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleSoundEffectSettingExtension; production classes">
+    <mkdir dir="${samplesoundeffectsettingextension.output.dir}"/>
+    <javac2 destdir="${samplesoundeffectsettingextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.samplesoundeffectsettingextension}/javac">
+      <compilerarg line="${compiler.args.samplesoundeffectsettingextension}"/>
+      <bootclasspath refid="samplesoundeffectsettingextension.module.bootclasspath"/>
+      <classpath refid="samplesoundeffectsettingextension.module.production.classpath"/>
+      <src refid="samplesoundeffectsettingextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.samplesoundeffectsettingextension"/>
+    </javac2>
+    
+    <copy todir="${samplesoundeffectsettingextension.output.dir}">
+      <fileset dir="${module.samplesoundeffectsettingextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.samplesoundeffectsettingextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.samplesoundeffectsettingextension.tests" depends="register.custom.compilers,compile.module.samplesoundeffectsettingextension.production" description="compile module SampleSoundEffectSettingExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.samplesoundeffectsettingextension" description="cleanup module">
+    <delete dir="${samplesoundeffectsettingextension.output.dir}"/>
+    <delete dir="${samplesoundeffectsettingextension.testoutput.dir}"/>
+  </target>
+</project>

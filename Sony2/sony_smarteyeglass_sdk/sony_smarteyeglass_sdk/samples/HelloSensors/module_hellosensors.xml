@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_hellosensors" default="compile.module.hellosensors">
+  <dirname property="module.hellosensors.basedir" file="${ant.file.module_hellosensors}"/>
+  
+  <property name="module.jdk.home.hellosensors" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.hellosensors" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.hellosensors" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.hellosensors" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="hellosensors.output.dir" value="${module.hellosensors.basedir}/../../../../out/production/HelloSensors"/>
+  <property name="hellosensors.testoutput.dir" value="${module.hellosensors.basedir}/../../../../out/test/HelloSensors"/>
+  
+  <path id="hellosensors.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="hellosensors.module.production.classpath">
+    <path refid="${module.jdk.classpath.hellosensors}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellosensors.runtime.production.module.classpath">
+    <pathelement location="${hellosensors.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="hellosensors.module.classpath">
+    <path refid="${module.jdk.classpath.hellosensors}"/>
+    <pathelement location="${hellosensors.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellosensors.runtime.module.classpath">
+    <pathelement location="${hellosensors.testoutput.dir}"/>
+    <pathelement location="${hellosensors.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.hellosensors">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.hellosensors">
+    <patternset refid="excluded.from.module.hellosensors"/>
+  </patternset>
+  
+  <path id="hellosensors.module.sourcepath">
+    <dirset dir="${module.hellosensors.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.hellosensors" depends="compile.module.hellosensors.production,compile.module.hellosensors.tests" description="Compile module HelloSensors"/>
+  
+  <target name="compile.module.hellosensors.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module HelloSensors; production classes">
+    <mkdir dir="${hellosensors.output.dir}"/>
+    <javac2 destdir="${hellosensors.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.hellosensors}/javac">
+      <compilerarg line="${compiler.args.hellosensors}"/>
+      <bootclasspath refid="hellosensors.module.bootclasspath"/>
+      <classpath refid="hellosensors.module.production.classpath"/>
+      <src refid="hellosensors.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.hellosensors"/>
+    </javac2>
+    
+    <copy todir="${hellosensors.output.dir}">
+      <fileset dir="${module.hellosensors.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.hellosensors.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.hellosensors.tests" depends="register.custom.compilers,compile.module.hellosensors.production" description="compile module HelloSensors; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.hellosensors" description="cleanup module">
+    <delete dir="${hellosensors.output.dir}"/>
+    <delete dir="${hellosensors.testoutput.dir}"/>
+  </target>
+</project>

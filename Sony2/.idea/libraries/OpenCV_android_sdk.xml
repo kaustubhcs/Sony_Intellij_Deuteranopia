@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="OpenCV-android-sdk">
+    <CLASSES />
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/OpenCV-android-sdk/sdk/java/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/OpenCV-android-sdk/sdk/java/gen" />
+      <root url="file://$PROJECT_DIR$/OpenCV-android-sdk/sdk/java/src" />
+    </SOURCES>
+  </library>
+</component>

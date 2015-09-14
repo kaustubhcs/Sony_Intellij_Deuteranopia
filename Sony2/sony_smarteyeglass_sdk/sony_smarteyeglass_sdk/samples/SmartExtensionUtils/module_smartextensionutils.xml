@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_smartextensionutils" default="compile.module.smartextensionutils">
+  <dirname property="module.smartextensionutils.basedir" file="${ant.file.module_smartextensionutils}"/>
+  
+  <property name="module.jdk.home.smartextensionutils" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.smartextensionutils" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.smartextensionutils" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.smartextensionutils" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="smartextensionutils.output.dir" value="${module.smartextensionutils.basedir}/../../../../out/production/SmartExtensionUtils"/>
+  <property name="smartextensionutils.testoutput.dir" value="${module.smartextensionutils.basedir}/../../../../out/test/SmartExtensionUtils"/>
+  
+  <path id="smartextensionutils.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="smartextensionutils.module.production.classpath">
+    <path refid="${module.jdk.classpath.smartextensionutils}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="smartextensionutils.runtime.production.module.classpath">
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="smartextensionutils.module.classpath">
+    <path refid="${module.jdk.classpath.smartextensionutils}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="smartextensionutils.runtime.module.classpath">
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.smartextensionutils">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.smartextensionutils">
+    <patternset refid="excluded.from.module.smartextensionutils"/>
+  </patternset>
+  
+  <path id="smartextensionutils.module.sourcepath">
+    <dirset dir="${module.smartextensionutils.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.smartextensionutils" depends="compile.module.smartextensionutils.production,compile.module.smartextensionutils.tests" description="Compile module SmartExtensionUtils"/>
+  
+  <target name="compile.module.smartextensionutils.production" depends="register.custom.compilers,compile.module.smartextensionapi" description="Compile module SmartExtensionUtils; production classes">
+    <mkdir dir="${smartextensionutils.output.dir}"/>
+    <javac2 destdir="${smartextensionutils.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.smartextensionutils}/javac">
+      <compilerarg line="${compiler.args.smartextensionutils}"/>
+      <bootclasspath refid="smartextensionutils.module.bootclasspath"/>
+      <classpath refid="smartextensionutils.module.production.classpath"/>
+      <src refid="smartextensionutils.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.smartextensionutils"/>
+    </javac2>
+    
+    <copy todir="${smartextensionutils.output.dir}">
+      <fileset dir="${module.smartextensionutils.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.smartextensionutils.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.smartextensionutils.tests" depends="register.custom.compilers,compile.module.smartextensionutils.production" description="compile module SmartExtensionUtils; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.smartextensionutils" description="cleanup module">
+    <delete dir="${smartextensionutils.output.dir}"/>
+    <delete dir="${smartextensionutils.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_smarteyeglassapi" default="compile.module.smarteyeglassapi">
+  <dirname property="module.smarteyeglassapi.basedir" file="${ant.file.module_smarteyeglassapi}"/>
+  
+  <property name="module.jdk.home.smarteyeglassapi" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.smarteyeglassapi" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.smarteyeglassapi" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.smarteyeglassapi" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="smarteyeglassapi.output.dir" value="${module.smarteyeglassapi.basedir}/../../../../out/production/SmartEyeglassAPI"/>
+  <property name="smarteyeglassapi.testoutput.dir" value="${module.smarteyeglassapi.basedir}/../../../../out/test/SmartEyeglassAPI"/>
+  
+  <path id="smarteyeglassapi.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="smarteyeglassapi.module.production.classpath">
+    <path refid="${module.jdk.classpath.smarteyeglassapi}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="smarteyeglassapi.runtime.production.module.classpath">
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="smarteyeglassapi.module.classpath">
+    <path refid="${module.jdk.classpath.smarteyeglassapi}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="smarteyeglassapi.runtime.module.classpath">
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.smarteyeglassapi">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.smarteyeglassapi">
+    <patternset refid="excluded.from.module.smarteyeglassapi"/>
+  </patternset>
+  
+  <path id="smarteyeglassapi.module.sourcepath">
+    <dirset dir="${module.smarteyeglassapi.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.smarteyeglassapi" depends="compile.module.smarteyeglassapi.production,compile.module.smarteyeglassapi.tests" description="Compile module SmartEyeglassAPI"/>
+  
+  <target name="compile.module.smarteyeglassapi.production" depends="register.custom.compilers,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SmartEyeglassAPI; production classes">
+    <mkdir dir="${smarteyeglassapi.output.dir}"/>
+    <javac2 destdir="${smarteyeglassapi.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.smarteyeglassapi}/javac">
+      <compilerarg line="${compiler.args.smarteyeglassapi}"/>
+      <bootclasspath refid="smarteyeglassapi.module.bootclasspath"/>
+      <classpath refid="smarteyeglassapi.module.production.classpath"/>
+      <src refid="smarteyeglassapi.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.smarteyeglassapi"/>
+    </javac2>
+    
+    <copy todir="${smarteyeglassapi.output.dir}">
+      <fileset dir="${module.smarteyeglassapi.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.smarteyeglassapi.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.smarteyeglassapi.tests" depends="register.custom.compilers,compile.module.smarteyeglassapi.production" description="compile module SmartEyeglassAPI; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.smarteyeglassapi" description="cleanup module">
+    <delete dir="${smarteyeglassapi.output.dir}"/>
+    <delete dir="${smarteyeglassapi.testoutput.dir}"/>
+  </target>
+</project>

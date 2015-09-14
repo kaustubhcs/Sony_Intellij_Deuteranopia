@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_samplearcylindricalextension" default="compile.module.samplearcylindricalextension">
+  <dirname property="module.samplearcylindricalextension.basedir" file="${ant.file.module_samplearcylindricalextension}"/>
+  
+  <property name="module.jdk.home.samplearcylindricalextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.samplearcylindricalextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.samplearcylindricalextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.samplearcylindricalextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="samplearcylindricalextension.output.dir" value="${module.samplearcylindricalextension.basedir}/../../../../out/production/SampleARCylindricalExtension"/>
+  <property name="samplearcylindricalextension.testoutput.dir" value="${module.samplearcylindricalextension.basedir}/../../../../out/test/SampleARCylindricalExtension"/>
+  
+  <path id="samplearcylindricalextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="samplearcylindricalextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.samplearcylindricalextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplearcylindricalextension.runtime.production.module.classpath">
+    <pathelement location="${samplearcylindricalextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="samplearcylindricalextension.module.classpath">
+    <path refid="${module.jdk.classpath.samplearcylindricalextension}"/>
+    <pathelement location="${samplearcylindricalextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplearcylindricalextension.runtime.module.classpath">
+    <pathelement location="${samplearcylindricalextension.testoutput.dir}"/>
+    <pathelement location="${samplearcylindricalextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.samplearcylindricalextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.samplearcylindricalextension">
+    <patternset refid="excluded.from.module.samplearcylindricalextension"/>
+  </patternset>
+  
+  <path id="samplearcylindricalextension.module.sourcepath">
+    <dirset dir="${module.samplearcylindricalextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.samplearcylindricalextension" depends="compile.module.samplearcylindricalextension.production,compile.module.samplearcylindricalextension.tests" description="Compile module SampleARCylindricalExtension"/>
+  
+  <target name="compile.module.samplearcylindricalextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleARCylindricalExtension; production classes">
+    <mkdir dir="${samplearcylindricalextension.output.dir}"/>
+    <javac2 destdir="${samplearcylindricalextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.samplearcylindricalextension}/javac">
+      <compilerarg line="${compiler.args.samplearcylindricalextension}"/>
+      <bootclasspath refid="samplearcylindricalextension.module.bootclasspath"/>
+      <classpath refid="samplearcylindricalextension.module.production.classpath"/>
+      <src refid="samplearcylindricalextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.samplearcylindricalextension"/>
+    </javac2>
+    
+    <copy todir="${samplearcylindricalextension.output.dir}">
+      <fileset dir="${module.samplearcylindricalextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.samplearcylindricalextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.samplearcylindricalextension.tests" depends="register.custom.compilers,compile.module.samplearcylindricalextension.production" description="compile module SampleARCylindricalExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.samplearcylindricalextension" description="cleanup module">
+    <delete dir="${samplearcylindricalextension.output.dir}"/>
+    <delete dir="${samplearcylindricalextension.testoutput.dir}"/>
+  </target>
+</project>

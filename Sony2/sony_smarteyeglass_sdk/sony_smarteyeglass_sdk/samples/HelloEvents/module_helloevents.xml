@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_helloevents" default="compile.module.helloevents">
+  <dirname property="module.helloevents.basedir" file="${ant.file.module_helloevents}"/>
+  
+  <property name="module.jdk.home.helloevents" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.helloevents" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.helloevents" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.helloevents" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="helloevents.output.dir" value="${module.helloevents.basedir}/../../../../out/production/HelloEvents"/>
+  <property name="helloevents.testoutput.dir" value="${module.helloevents.basedir}/../../../../out/test/HelloEvents"/>
+  
+  <path id="helloevents.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="helloevents.module.production.classpath">
+    <path refid="${module.jdk.classpath.helloevents}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="helloevents.runtime.production.module.classpath">
+    <pathelement location="${helloevents.output.dir}"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="helloevents.module.classpath">
+    <path refid="${module.jdk.classpath.helloevents}"/>
+    <pathelement location="${helloevents.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="helloevents.runtime.module.classpath">
+    <pathelement location="${helloevents.testoutput.dir}"/>
+    <pathelement location="${helloevents.output.dir}"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.helloevents">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.helloevents">
+    <patternset refid="excluded.from.module.helloevents"/>
+  </patternset>
+  
+  <path id="helloevents.module.sourcepath">
+    <dirset dir="${module.helloevents.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.helloevents" depends="compile.module.helloevents.production,compile.module.helloevents.tests" description="Compile module HelloEvents"/>
+  
+  <target name="compile.module.helloevents.production" depends="register.custom.compilers,compile.module.smartextensionutils,compile.module.smarteyeglassapi,compile.module.smartextensionapi" description="Compile module HelloEvents; production classes">
+    <mkdir dir="${helloevents.output.dir}"/>
+    <javac2 destdir="${helloevents.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.helloevents}/javac">
+      <compilerarg line="${compiler.args.helloevents}"/>
+      <bootclasspath refid="helloevents.module.bootclasspath"/>
+      <classpath refid="helloevents.module.production.classpath"/>
+      <src refid="helloevents.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.helloevents"/>
+    </javac2>
+    
+    <copy todir="${helloevents.output.dir}">
+      <fileset dir="${module.helloevents.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.helloevents.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.helloevents.tests" depends="register.custom.compilers,compile.module.helloevents.production" description="compile module HelloEvents; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.helloevents" description="cleanup module">
+    <delete dir="${helloevents.output.dir}"/>
+    <delete dir="${helloevents.testoutput.dir}"/>
+  </target>
+</project>

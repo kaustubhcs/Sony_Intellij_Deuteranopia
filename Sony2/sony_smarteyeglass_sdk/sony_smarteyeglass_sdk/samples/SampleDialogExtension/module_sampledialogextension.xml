@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_sampledialogextension" default="compile.module.sampledialogextension">
+  <dirname property="module.sampledialogextension.basedir" file="${ant.file.module_sampledialogextension}"/>
+  
+  <property name="module.jdk.home.sampledialogextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.sampledialogextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.sampledialogextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.sampledialogextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="sampledialogextension.output.dir" value="${module.sampledialogextension.basedir}/../../../../out/production/SampleDialogExtension"/>
+  <property name="sampledialogextension.testoutput.dir" value="${module.sampledialogextension.basedir}/../../../../out/test/SampleDialogExtension"/>
+  
+  <path id="sampledialogextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sampledialogextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.sampledialogextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="sampledialogextension.runtime.production.module.classpath">
+    <pathelement location="${sampledialogextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="sampledialogextension.module.classpath">
+    <path refid="${module.jdk.classpath.sampledialogextension}"/>
+    <pathelement location="${sampledialogextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="sampledialogextension.runtime.module.classpath">
+    <pathelement location="${sampledialogextension.testoutput.dir}"/>
+    <pathelement location="${sampledialogextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sampledialogextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sampledialogextension">
+    <patternset refid="excluded.from.module.sampledialogextension"/>
+  </patternset>
+  
+  <path id="sampledialogextension.module.sourcepath">
+    <dirset dir="${module.sampledialogextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sampledialogextension" depends="compile.module.sampledialogextension.production,compile.module.sampledialogextension.tests" description="Compile module SampleDialogExtension"/>
+  
+  <target name="compile.module.sampledialogextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleDialogExtension; production classes">
+    <mkdir dir="${sampledialogextension.output.dir}"/>
+    <javac2 destdir="${sampledialogextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sampledialogextension}/javac">
+      <compilerarg line="${compiler.args.sampledialogextension}"/>
+      <bootclasspath refid="sampledialogextension.module.bootclasspath"/>
+      <classpath refid="sampledialogextension.module.production.classpath"/>
+      <src refid="sampledialogextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sampledialogextension"/>
+    </javac2>
+    
+    <copy todir="${sampledialogextension.output.dir}">
+      <fileset dir="${module.sampledialogextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.sampledialogextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sampledialogextension.tests" depends="register.custom.compilers,compile.module.sampledialogextension.production" description="compile module SampleDialogExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sampledialogextension" description="cleanup module">
+    <delete dir="${sampledialogextension.output.dir}"/>
+    <delete dir="${sampledialogextension.testoutput.dir}"/>
+  </target>
+</project>

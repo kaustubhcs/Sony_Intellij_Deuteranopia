@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_samplearconvertcoordinatesystemextension" default="compile.module.samplearconvertcoordinatesystemextension">
+  <dirname property="module.samplearconvertcoordinatesystemextension.basedir" file="${ant.file.module_samplearconvertcoordinatesystemextension}"/>
+  
+  <property name="module.jdk.home.samplearconvertcoordinatesystemextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.samplearconvertcoordinatesystemextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.samplearconvertcoordinatesystemextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.samplearconvertcoordinatesystemextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="samplearconvertcoordinatesystemextension.output.dir" value="${module.samplearconvertcoordinatesystemextension.basedir}/../../../../out/production/SampleARConvertCoordinateSystemExtension"/>
+  <property name="samplearconvertcoordinatesystemextension.testoutput.dir" value="${module.samplearconvertcoordinatesystemextension.basedir}/../../../../out/test/SampleARConvertCoordinateSystemExtension"/>
+  
+  <path id="samplearconvertcoordinatesystemextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="samplearconvertcoordinatesystemextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.samplearconvertcoordinatesystemextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplearconvertcoordinatesystemextension.runtime.production.module.classpath">
+    <pathelement location="${samplearconvertcoordinatesystemextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="samplearconvertcoordinatesystemextension.module.classpath">
+    <path refid="${module.jdk.classpath.samplearconvertcoordinatesystemextension}"/>
+    <pathelement location="${samplearconvertcoordinatesystemextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplearconvertcoordinatesystemextension.runtime.module.classpath">
+    <pathelement location="${samplearconvertcoordinatesystemextension.testoutput.dir}"/>
+    <pathelement location="${samplearconvertcoordinatesystemextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.samplearconvertcoordinatesystemextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.samplearconvertcoordinatesystemextension">
+    <patternset refid="excluded.from.module.samplearconvertcoordinatesystemextension"/>
+  </patternset>
+  
+  <path id="samplearconvertcoordinatesystemextension.module.sourcepath">
+    <dirset dir="${module.samplearconvertcoordinatesystemextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.samplearconvertcoordinatesystemextension" depends="compile.module.samplearconvertcoordinatesystemextension.production,compile.module.samplearconvertcoordinatesystemextension.tests" description="Compile module SampleARConvertCoordinateSystemExtension"/>
+  
+  <target name="compile.module.samplearconvertcoordinatesystemextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleARConvertCoordinateSystemExtension; production classes">
+    <mkdir dir="${samplearconvertcoordinatesystemextension.output.dir}"/>
+    <javac2 destdir="${samplearconvertcoordinatesystemextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.samplearconvertcoordinatesystemextension}/javac">
+      <compilerarg line="${compiler.args.samplearconvertcoordinatesystemextension}"/>
+      <bootclasspath refid="samplearconvertcoordinatesystemextension.module.bootclasspath"/>
+      <classpath refid="samplearconvertcoordinatesystemextension.module.production.classpath"/>
+      <src refid="samplearconvertcoordinatesystemextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.samplearconvertcoordinatesystemextension"/>
+    </javac2>
+    
+    <copy todir="${samplearconvertcoordinatesystemextension.output.dir}">
+      <fileset dir="${module.samplearconvertcoordinatesystemextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.samplearconvertcoordinatesystemextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.samplearconvertcoordinatesystemextension.tests" depends="register.custom.compilers,compile.module.samplearconvertcoordinatesystemextension.production" description="compile module SampleARConvertCoordinateSystemExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.samplearconvertcoordinatesystemextension" description="cleanup module">
+    <delete dir="${samplearconvertcoordinatesystemextension.output.dir}"/>
+    <delete dir="${samplearconvertcoordinatesystemextension.testoutput.dir}"/>
+  </target>
+</project>

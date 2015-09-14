@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_samplecameraextension" default="compile.module.samplecameraextension">
+  <dirname property="module.samplecameraextension.basedir" file="${ant.file.module_samplecameraextension}"/>
+  
+  <property name="module.jdk.home.samplecameraextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.samplecameraextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.samplecameraextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.samplecameraextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="samplecameraextension.output.dir" value="${module.samplecameraextension.basedir}/../../../../out/production/SampleCameraExtension"/>
+  <property name="samplecameraextension.testoutput.dir" value="${module.samplecameraextension.basedir}/../../../../out/test/SampleCameraExtension"/>
+  
+  <path id="samplecameraextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="samplecameraextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.samplecameraextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+    <path refid="library.opencv-android-sdk.classpath"/>
+  </path>
+  
+  <path id="samplecameraextension.runtime.production.module.classpath">
+    <pathelement location="${samplecameraextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+    <path refid="library.opencv-android-sdk.classpath"/>
+  </path>
+  
+  <path id="samplecameraextension.module.classpath">
+    <path refid="${module.jdk.classpath.samplecameraextension}"/>
+    <pathelement location="${samplecameraextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+    <path refid="library.opencv-android-sdk.classpath"/>
+  </path>
+  
+  <path id="samplecameraextension.runtime.module.classpath">
+    <pathelement location="${samplecameraextension.testoutput.dir}"/>
+    <pathelement location="${samplecameraextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+    <path refid="library.opencv-android-sdk.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.samplecameraextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.samplecameraextension">
+    <patternset refid="excluded.from.module.samplecameraextension"/>
+  </patternset>
+  
+  <path id="samplecameraextension.module.sourcepath">
+    <dirset dir="${module.samplecameraextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.samplecameraextension" depends="compile.module.samplecameraextension.production,compile.module.samplecameraextension.tests" description="Compile module SampleCameraExtension"/>
+  
+  <target name="compile.module.samplecameraextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleCameraExtension; production classes">
+    <mkdir dir="${samplecameraextension.output.dir}"/>
+    <javac2 destdir="${samplecameraextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.samplecameraextension}/javac">
+      <compilerarg line="${compiler.args.samplecameraextension}"/>
+      <bootclasspath refid="samplecameraextension.module.bootclasspath"/>
+      <classpath refid="samplecameraextension.module.production.classpath"/>
+      <src refid="samplecameraextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.samplecameraextension"/>
+    </javac2>
+    
+    <copy todir="${samplecameraextension.output.dir}">
+      <fileset dir="${module.samplecameraextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.samplecameraextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.samplecameraextension.tests" depends="register.custom.compilers,compile.module.samplecameraextension.production" description="compile module SampleCameraExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.samplecameraextension" description="cleanup module">
+    <delete dir="${samplecameraextension.output.dir}"/>
+    <delete dir="${samplecameraextension.testoutput.dir}"/>
+  </target>
+</project>

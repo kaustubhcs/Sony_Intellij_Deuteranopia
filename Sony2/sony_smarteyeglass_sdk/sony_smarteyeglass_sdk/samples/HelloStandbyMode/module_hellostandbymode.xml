@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_hellostandbymode" default="compile.module.hellostandbymode">
+  <dirname property="module.hellostandbymode.basedir" file="${ant.file.module_hellostandbymode}"/>
+  
+  <property name="module.jdk.home.hellostandbymode" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.hellostandbymode" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.hellostandbymode" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.hellostandbymode" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="hellostandbymode.output.dir" value="${module.hellostandbymode.basedir}/../../../../out/production/HelloStandbyMode"/>
+  <property name="hellostandbymode.testoutput.dir" value="${module.hellostandbymode.basedir}/../../../../out/test/HelloStandbyMode"/>
+  
+  <path id="hellostandbymode.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="hellostandbymode.module.production.classpath">
+    <path refid="${module.jdk.classpath.hellostandbymode}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellostandbymode.runtime.production.module.classpath">
+    <pathelement location="${hellostandbymode.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="hellostandbymode.module.classpath">
+    <path refid="${module.jdk.classpath.hellostandbymode}"/>
+    <pathelement location="${hellostandbymode.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellostandbymode.runtime.module.classpath">
+    <pathelement location="${hellostandbymode.testoutput.dir}"/>
+    <pathelement location="${hellostandbymode.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.hellostandbymode">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.hellostandbymode">
+    <patternset refid="excluded.from.module.hellostandbymode"/>
+  </patternset>
+  
+  <path id="hellostandbymode.module.sourcepath">
+    <dirset dir="${module.hellostandbymode.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.hellostandbymode" depends="compile.module.hellostandbymode.production,compile.module.hellostandbymode.tests" description="Compile module HelloStandbyMode"/>
+  
+  <target name="compile.module.hellostandbymode.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module HelloStandbyMode; production classes">
+    <mkdir dir="${hellostandbymode.output.dir}"/>
+    <javac2 destdir="${hellostandbymode.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.hellostandbymode}/javac">
+      <compilerarg line="${compiler.args.hellostandbymode}"/>
+      <bootclasspath refid="hellostandbymode.module.bootclasspath"/>
+      <classpath refid="hellostandbymode.module.production.classpath"/>
+      <src refid="hellostandbymode.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.hellostandbymode"/>
+    </javac2>
+    
+    <copy todir="${hellostandbymode.output.dir}">
+      <fileset dir="${module.hellostandbymode.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.hellostandbymode.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.hellostandbymode.tests" depends="register.custom.compilers,compile.module.hellostandbymode.production" description="compile module HelloStandbyMode; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.hellostandbymode" description="cleanup module">
+    <delete dir="${hellostandbymode.output.dir}"/>
+    <delete dir="${hellostandbymode.testoutput.dir}"/>
+  </target>
+</project>

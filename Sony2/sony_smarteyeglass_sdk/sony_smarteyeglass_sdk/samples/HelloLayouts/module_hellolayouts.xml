@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_hellolayouts" default="compile.module.hellolayouts">
+  <dirname property="module.hellolayouts.basedir" file="${ant.file.module_hellolayouts}"/>
+  
+  <property name="module.jdk.home.hellolayouts" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.hellolayouts" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.hellolayouts" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.hellolayouts" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="hellolayouts.output.dir" value="${module.hellolayouts.basedir}/../../../../out/production/HelloLayouts"/>
+  <property name="hellolayouts.testoutput.dir" value="${module.hellolayouts.basedir}/../../../../out/test/HelloLayouts"/>
+  
+  <path id="hellolayouts.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="hellolayouts.module.production.classpath">
+    <path refid="${module.jdk.classpath.hellolayouts}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellolayouts.runtime.production.module.classpath">
+    <pathelement location="${hellolayouts.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="hellolayouts.module.classpath">
+    <path refid="${module.jdk.classpath.hellolayouts}"/>
+    <pathelement location="${hellolayouts.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellolayouts.runtime.module.classpath">
+    <pathelement location="${hellolayouts.testoutput.dir}"/>
+    <pathelement location="${hellolayouts.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.hellolayouts">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.hellolayouts">
+    <patternset refid="excluded.from.module.hellolayouts"/>
+  </patternset>
+  
+  <path id="hellolayouts.module.sourcepath">
+    <dirset dir="${module.hellolayouts.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.hellolayouts" depends="compile.module.hellolayouts.production,compile.module.hellolayouts.tests" description="Compile module HelloLayouts"/>
+  
+  <target name="compile.module.hellolayouts.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module HelloLayouts; production classes">
+    <mkdir dir="${hellolayouts.output.dir}"/>
+    <javac2 destdir="${hellolayouts.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.hellolayouts}/javac">
+      <compilerarg line="${compiler.args.hellolayouts}"/>
+      <bootclasspath refid="hellolayouts.module.bootclasspath"/>
+      <classpath refid="hellolayouts.module.production.classpath"/>
+      <src refid="hellolayouts.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.hellolayouts"/>
+    </javac2>
+    
+    <copy todir="${hellolayouts.output.dir}">
+      <fileset dir="${module.hellolayouts.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.hellolayouts.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.hellolayouts.tests" depends="register.custom.compilers,compile.module.hellolayouts.production" description="compile module HelloLayouts; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.hellolayouts" description="cleanup module">
+    <delete dir="${hellolayouts.output.dir}"/>
+    <delete dir="${hellolayouts.testoutput.dir}"/>
+  </target>
+</project>

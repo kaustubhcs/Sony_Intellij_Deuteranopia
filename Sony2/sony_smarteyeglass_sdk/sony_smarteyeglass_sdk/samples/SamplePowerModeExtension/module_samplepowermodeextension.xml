@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_samplepowermodeextension" default="compile.module.samplepowermodeextension">
+  <dirname property="module.samplepowermodeextension.basedir" file="${ant.file.module_samplepowermodeextension}"/>
+  
+  <property name="module.jdk.home.samplepowermodeextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.samplepowermodeextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.samplepowermodeextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.samplepowermodeextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="samplepowermodeextension.output.dir" value="${module.samplepowermodeextension.basedir}/../../../../out/production/SamplePowerModeExtension"/>
+  <property name="samplepowermodeextension.testoutput.dir" value="${module.samplepowermodeextension.basedir}/../../../../out/test/SamplePowerModeExtension"/>
+  
+  <path id="samplepowermodeextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="samplepowermodeextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.samplepowermodeextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplepowermodeextension.runtime.production.module.classpath">
+    <pathelement location="${samplepowermodeextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="samplepowermodeextension.module.classpath">
+    <path refid="${module.jdk.classpath.samplepowermodeextension}"/>
+    <pathelement location="${samplepowermodeextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplepowermodeextension.runtime.module.classpath">
+    <pathelement location="${samplepowermodeextension.testoutput.dir}"/>
+    <pathelement location="${samplepowermodeextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.samplepowermodeextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.samplepowermodeextension">
+    <patternset refid="excluded.from.module.samplepowermodeextension"/>
+  </patternset>
+  
+  <path id="samplepowermodeextension.module.sourcepath">
+    <dirset dir="${module.samplepowermodeextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.samplepowermodeextension" depends="compile.module.samplepowermodeextension.production,compile.module.samplepowermodeextension.tests" description="Compile module SamplePowerModeExtension"/>
+  
+  <target name="compile.module.samplepowermodeextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SamplePowerModeExtension; production classes">
+    <mkdir dir="${samplepowermodeextension.output.dir}"/>
+    <javac2 destdir="${samplepowermodeextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.samplepowermodeextension}/javac">
+      <compilerarg line="${compiler.args.samplepowermodeextension}"/>
+      <bootclasspath refid="samplepowermodeextension.module.bootclasspath"/>
+      <classpath refid="samplepowermodeextension.module.production.classpath"/>
+      <src refid="samplepowermodeextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.samplepowermodeextension"/>
+    </javac2>
+    
+    <copy todir="${samplepowermodeextension.output.dir}">
+      <fileset dir="${module.samplepowermodeextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.samplepowermodeextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.samplepowermodeextension.tests" depends="register.custom.compilers,compile.module.samplepowermodeextension.production" description="compile module SamplePowerModeExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.samplepowermodeextension" description="cleanup module">
+    <delete dir="${samplepowermodeextension.output.dir}"/>
+    <delete dir="${samplepowermodeextension.testoutput.dir}"/>
+  </target>
+</project>

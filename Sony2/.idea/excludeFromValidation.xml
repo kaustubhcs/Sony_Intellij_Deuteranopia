@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExcludeFromValidation">
+    <file url="file://$PROJECT_DIR$/OpenCV-android-sdk/samples/tutorial-1-camerapreview/libraries/opencv/res/values/attrs.xml" />
+  </component>
+</project>

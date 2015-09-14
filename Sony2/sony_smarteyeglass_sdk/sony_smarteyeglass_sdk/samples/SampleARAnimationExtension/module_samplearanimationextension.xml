@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_samplearanimationextension" default="compile.module.samplearanimationextension">
+  <dirname property="module.samplearanimationextension.basedir" file="${ant.file.module_samplearanimationextension}"/>
+  
+  <property name="module.jdk.home.samplearanimationextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.samplearanimationextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.samplearanimationextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.samplearanimationextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="samplearanimationextension.output.dir" value="${module.samplearanimationextension.basedir}/../../../../out/production/SampleARAnimationExtension"/>
+  <property name="samplearanimationextension.testoutput.dir" value="${module.samplearanimationextension.basedir}/../../../../out/test/SampleARAnimationExtension"/>
+  
+  <path id="samplearanimationextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="samplearanimationextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.samplearanimationextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplearanimationextension.runtime.production.module.classpath">
+    <pathelement location="${samplearanimationextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="samplearanimationextension.module.classpath">
+    <path refid="${module.jdk.classpath.samplearanimationextension}"/>
+    <pathelement location="${samplearanimationextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="samplearanimationextension.runtime.module.classpath">
+    <pathelement location="${samplearanimationextension.testoutput.dir}"/>
+    <pathelement location="${samplearanimationextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.samplearanimationextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.samplearanimationextension">
+    <patternset refid="excluded.from.module.samplearanimationextension"/>
+  </patternset>
+  
+  <path id="samplearanimationextension.module.sourcepath">
+    <dirset dir="${module.samplearanimationextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.samplearanimationextension" depends="compile.module.samplearanimationextension.production,compile.module.samplearanimationextension.tests" description="Compile module SampleARAnimationExtension"/>
+  
+  <target name="compile.module.samplearanimationextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleARAnimationExtension; production classes">
+    <mkdir dir="${samplearanimationextension.output.dir}"/>
+    <javac2 destdir="${samplearanimationextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.samplearanimationextension}/javac">
+      <compilerarg line="${compiler.args.samplearanimationextension}"/>
+      <bootclasspath refid="samplearanimationextension.module.bootclasspath"/>
+      <classpath refid="samplearanimationextension.module.production.classpath"/>
+      <src refid="samplearanimationextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.samplearanimationextension"/>
+    </javac2>
+    
+    <copy todir="${samplearanimationextension.output.dir}">
+      <fileset dir="${module.samplearanimationextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.samplearanimationextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.samplearanimationextension.tests" depends="register.custom.compilers,compile.module.samplearanimationextension.production" description="compile module SampleARAnimationExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.samplearanimationextension" description="cleanup module">
+    <delete dir="${samplearanimationextension.output.dir}"/>
+    <delete dir="${samplearanimationextension.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_advancedlayouts" default="compile.module.advancedlayouts">
+  <dirname property="module.advancedlayouts.basedir" file="${ant.file.module_advancedlayouts}"/>
+  
+  <property name="module.jdk.home.advancedlayouts" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.advancedlayouts" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.advancedlayouts" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.advancedlayouts" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="advancedlayouts.output.dir" value="${module.advancedlayouts.basedir}/../../../../out/production/AdvancedLayouts"/>
+  <property name="advancedlayouts.testoutput.dir" value="${module.advancedlayouts.basedir}/../../../../out/test/AdvancedLayouts"/>
+  
+  <path id="advancedlayouts.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="advancedlayouts.module.production.classpath">
+    <path refid="${module.jdk.classpath.advancedlayouts}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="advancedlayouts.runtime.production.module.classpath">
+    <pathelement location="${advancedlayouts.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="advancedlayouts.module.classpath">
+    <path refid="${module.jdk.classpath.advancedlayouts}"/>
+    <pathelement location="${advancedlayouts.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="advancedlayouts.runtime.module.classpath">
+    <pathelement location="${advancedlayouts.testoutput.dir}"/>
+    <pathelement location="${advancedlayouts.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.advancedlayouts">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.advancedlayouts">
+    <patternset refid="excluded.from.module.advancedlayouts"/>
+  </patternset>
+  
+  <path id="advancedlayouts.module.sourcepath">
+    <dirset dir="${module.advancedlayouts.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.advancedlayouts" depends="compile.module.advancedlayouts.production,compile.module.advancedlayouts.tests" description="Compile module AdvancedLayouts"/>
+  
+  <target name="compile.module.advancedlayouts.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module AdvancedLayouts; production classes">
+    <mkdir dir="${advancedlayouts.output.dir}"/>
+    <javac2 destdir="${advancedlayouts.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.advancedlayouts}/javac">
+      <compilerarg line="${compiler.args.advancedlayouts}"/>
+      <bootclasspath refid="advancedlayouts.module.bootclasspath"/>
+      <classpath refid="advancedlayouts.module.production.classpath"/>
+      <src refid="advancedlayouts.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.advancedlayouts"/>
+    </javac2>
+    
+    <copy todir="${advancedlayouts.output.dir}">
+      <fileset dir="${module.advancedlayouts.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.advancedlayouts.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.advancedlayouts.tests" depends="register.custom.compilers,compile.module.advancedlayouts.production" description="compile module AdvancedLayouts; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.advancedlayouts" description="cleanup module">
+    <delete dir="${advancedlayouts.output.dir}"/>
+    <delete dir="${advancedlayouts.testoutput.dir}"/>
+  </target>
+</project>

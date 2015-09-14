@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_sampledisplaysettingextension" default="compile.module.sampledisplaysettingextension">
+  <dirname property="module.sampledisplaysettingextension.basedir" file="${ant.file.module_sampledisplaysettingextension}"/>
+  
+  <property name="module.jdk.home.sampledisplaysettingextension" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.sampledisplaysettingextension" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.sampledisplaysettingextension" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.sampledisplaysettingextension" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="sampledisplaysettingextension.output.dir" value="${module.sampledisplaysettingextension.basedir}/../../../../out/production/SampleDisplaySettingExtension"/>
+  <property name="sampledisplaysettingextension.testoutput.dir" value="${module.sampledisplaysettingextension.basedir}/../../../../out/test/SampleDisplaySettingExtension"/>
+  
+  <path id="sampledisplaysettingextension.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sampledisplaysettingextension.module.production.classpath">
+    <path refid="${module.jdk.classpath.sampledisplaysettingextension}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="sampledisplaysettingextension.runtime.production.module.classpath">
+    <pathelement location="${sampledisplaysettingextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="sampledisplaysettingextension.module.classpath">
+    <path refid="${module.jdk.classpath.sampledisplaysettingextension}"/>
+    <pathelement location="${sampledisplaysettingextension.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="sampledisplaysettingextension.runtime.module.classpath">
+    <pathelement location="${sampledisplaysettingextension.testoutput.dir}"/>
+    <pathelement location="${sampledisplaysettingextension.output.dir}"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sampledisplaysettingextension">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sampledisplaysettingextension">
+    <patternset refid="excluded.from.module.sampledisplaysettingextension"/>
+  </patternset>
+  
+  <path id="sampledisplaysettingextension.module.sourcepath">
+    <dirset dir="${module.sampledisplaysettingextension.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sampledisplaysettingextension" depends="compile.module.sampledisplaysettingextension.production,compile.module.sampledisplaysettingextension.tests" description="Compile module SampleDisplaySettingExtension"/>
+  
+  <target name="compile.module.sampledisplaysettingextension.production" depends="register.custom.compilers,compile.module.smarteyeglassapi,compile.module.smartextensionutils,compile.module.smartextensionapi" description="Compile module SampleDisplaySettingExtension; production classes">
+    <mkdir dir="${sampledisplaysettingextension.output.dir}"/>
+    <javac2 destdir="${sampledisplaysettingextension.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sampledisplaysettingextension}/javac">
+      <compilerarg line="${compiler.args.sampledisplaysettingextension}"/>
+      <bootclasspath refid="sampledisplaysettingextension.module.bootclasspath"/>
+      <classpath refid="sampledisplaysettingextension.module.production.classpath"/>
+      <src refid="sampledisplaysettingextension.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sampledisplaysettingextension"/>
+    </javac2>
+    
+    <copy todir="${sampledisplaysettingextension.output.dir}">
+      <fileset dir="${module.sampledisplaysettingextension.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.sampledisplaysettingextension.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sampledisplaysettingextension.tests" depends="register.custom.compilers,compile.module.sampledisplaysettingextension.production" description="compile module SampleDisplaySettingExtension; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sampledisplaysettingextension" description="cleanup module">
+    <delete dir="${sampledisplaysettingextension.output.dir}"/>
+    <delete dir="${sampledisplaysettingextension.testoutput.dir}"/>
+  </target>
+</project>

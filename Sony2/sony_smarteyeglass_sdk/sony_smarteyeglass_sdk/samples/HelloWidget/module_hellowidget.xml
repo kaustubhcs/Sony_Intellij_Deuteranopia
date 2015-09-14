@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_hellowidget" default="compile.module.hellowidget">
+  <dirname property="module.hellowidget.basedir" file="${ant.file.module_hellowidget}"/>
+  
+  <property name="module.jdk.home.hellowidget" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.hellowidget" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.hellowidget" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.hellowidget" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="hellowidget.output.dir" value="${module.hellowidget.basedir}/../../../../out/production/HelloWidget"/>
+  <property name="hellowidget.testoutput.dir" value="${module.hellowidget.basedir}/../../../../out/test/HelloWidget"/>
+  
+  <path id="hellowidget.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="hellowidget.module.production.classpath">
+    <path refid="${module.jdk.classpath.hellowidget}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellowidget.runtime.production.module.classpath">
+    <pathelement location="${hellowidget.output.dir}"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="hellowidget.module.classpath">
+    <path refid="${module.jdk.classpath.hellowidget}"/>
+    <pathelement location="${hellowidget.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+  </path>
+  
+  <path id="hellowidget.runtime.module.classpath">
+    <pathelement location="${hellowidget.testoutput.dir}"/>
+    <pathelement location="${hellowidget.output.dir}"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.hellowidget">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.hellowidget">
+    <patternset refid="excluded.from.module.hellowidget"/>
+  </patternset>
+  
+  <path id="hellowidget.module.sourcepath">
+    <dirset dir="${module.hellowidget.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.hellowidget" depends="compile.module.hellowidget.production,compile.module.hellowidget.tests" description="Compile module HelloWidget"/>
+  
+  <target name="compile.module.hellowidget.production" depends="register.custom.compilers,compile.module.smartextensionutils,compile.module.smarteyeglassapi,compile.module.smartextensionapi" description="Compile module HelloWidget; production classes">
+    <mkdir dir="${hellowidget.output.dir}"/>
+    <javac2 destdir="${hellowidget.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.hellowidget}/javac">
+      <compilerarg line="${compiler.args.hellowidget}"/>
+      <bootclasspath refid="hellowidget.module.bootclasspath"/>
+      <classpath refid="hellowidget.module.production.classpath"/>
+      <src refid="hellowidget.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.hellowidget"/>
+    </javac2>
+    
+    <copy todir="${hellowidget.output.dir}">
+      <fileset dir="${module.hellowidget.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.hellowidget.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.hellowidget.tests" depends="register.custom.compilers,compile.module.hellowidget.production" description="compile module HelloWidget; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.hellowidget" description="cleanup module">
+    <delete dir="${hellowidget.output.dir}"/>
+    <delete dir="${hellowidget.testoutput.dir}"/>
+  </target>
+</project>

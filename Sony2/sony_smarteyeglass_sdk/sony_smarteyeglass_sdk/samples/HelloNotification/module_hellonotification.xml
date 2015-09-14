@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_hellonotification" default="compile.module.hellonotification">
+  <dirname property="module.hellonotification.basedir" file="${ant.file.module_hellonotification}"/>
+  
+  <property name="module.jdk.home.hellonotification" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.hellonotification" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.hellonotification" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.hellonotification" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="hellonotification.output.dir" value="${module.hellonotification.basedir}/../../../../out/production/HelloNotification"/>
+  <property name="hellonotification.testoutput.dir" value="${module.hellonotification.basedir}/../../../../out/test/HelloNotification"/>
+  
+  <path id="hellonotification.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="hellonotification.module.production.classpath">
+    <path refid="${module.jdk.classpath.hellonotification}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+  </path>
+  
+  <path id="hellonotification.runtime.production.module.classpath">
+    <pathelement location="${hellonotification.output.dir}"/>
+    <path refid="smartextensionutils.runtime.production.module.classpath"/>
+    <path refid="smartextensionapi.runtime.production.module.classpath"/>
+    <path refid="smarteyeglassapi.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="hellonotification.module.classpath">
+    <path refid="${module.jdk.classpath.hellonotification}"/>
+    <pathelement location="${hellonotification.output.dir}"/>
+    <pathelement location="${smartextensionutils.testoutput.dir}"/>
+    <pathelement location="${smartextensionutils.output.dir}"/>
+    <pathelement location="${smartextensionapi.testoutput.dir}"/>
+    <pathelement location="${smartextensionapi.output.dir}"/>
+    <pathelement location="${smarteyeglassapi.testoutput.dir}"/>
+    <pathelement location="${smarteyeglassapi.output.dir}"/>
+  </path>
+  
+  <path id="hellonotification.runtime.module.classpath">
+    <pathelement location="${hellonotification.testoutput.dir}"/>
+    <pathelement location="${hellonotification.output.dir}"/>
+    <path refid="smartextensionutils.runtime.module.classpath"/>
+    <path refid="smartextensionapi.runtime.module.classpath"/>
+    <path refid="smarteyeglassapi.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.hellonotification">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.hellonotification">
+    <patternset refid="excluded.from.module.hellonotification"/>
+  </patternset>
+  
+  <path id="hellonotification.module.sourcepath">
+    <dirset dir="${module.hellonotification.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.hellonotification" depends="compile.module.hellonotification.production,compile.module.hellonotification.tests" description="Compile module HelloNotification"/>
+  
+  <target name="compile.module.hellonotification.production" depends="register.custom.compilers,compile.module.smartextensionutils,compile.module.smartextensionapi,compile.module.smarteyeglassapi" description="Compile module HelloNotification; production classes">
+    <mkdir dir="${hellonotification.output.dir}"/>
+    <javac2 destdir="${hellonotification.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.hellonotification}/javac">
+      <compilerarg line="${compiler.args.hellonotification}"/>
+      <bootclasspath refid="hellonotification.module.bootclasspath"/>
+      <classpath refid="hellonotification.module.production.classpath"/>
+      <src refid="hellonotification.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.hellonotification"/>
+    </javac2>
+    
+    <copy todir="${hellonotification.output.dir}">
+      <fileset dir="${module.hellonotification.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.hellonotification.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.hellonotification.tests" depends="register.custom.compilers,compile.module.hellonotification.production" description="compile module HelloNotification; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.hellonotification" description="cleanup module">
+    <delete dir="${hellonotification.output.dir}"/>
+    <delete dir="${hellonotification.testoutput.dir}"/>
+  </target>
+</project>
